@@ -4,6 +4,7 @@
 #include <GameFramework/CharacterMovementComponent.h>
 #include <PaperZD/Public/PaperZDAnimationComponent.h>
 #include <PaperZD/Public/PaperZDAnimInstance.h>
+#include <Paper2D/Classes/PaperFlipbookComponent.h>
 
 ABaseCharacter::ABaseCharacter()
 {
@@ -65,6 +66,8 @@ void ABaseCharacter::Attack()
 		bIsAttacking = true;
 
 		GetAnimationComponent()->GetAnimInstance()->JumpToNode("Attack1");
+
+		DrawDebugSphere(GetWorld(), GetActorLocation() + (FVector(GetSprite()->GetRelativeScale3D().X, 0, 0) * AttackRange), 16, 16, FColor::Red, false, 1);
 	}
 }
 
