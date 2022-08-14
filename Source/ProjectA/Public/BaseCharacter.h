@@ -41,6 +41,9 @@ protected:
 
 	void StartJumping();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
+	bool bCanMove = true;
+
 	///////////////////////////////////////////////////
 	///
 	/// COMBAT 

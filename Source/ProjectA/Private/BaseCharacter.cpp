@@ -41,7 +41,7 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void ABaseCharacter::Move(float AxisValue)
 {
-	if (Controller && AxisValue != 0)
+	if (Controller && AxisValue != 0 && bCanMove)
 	{
 		FVector WorldDirection = FVector::ForwardVector;
 
@@ -64,6 +64,7 @@ void ABaseCharacter::Attack()
 	if (!bIsAttacking)
 	{
 		bIsAttacking = true;
+		bCanMove = false;
 
 		GetAnimationComponent()->GetAnimInstance()->JumpToNode("Attack1");
 
@@ -74,4 +75,6 @@ void ABaseCharacter::Attack()
 void ABaseCharacter::ResetCombat()
 {
 	bIsAttacking = false;
+
+	bCanMove = true;
 }
