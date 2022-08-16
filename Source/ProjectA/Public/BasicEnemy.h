@@ -16,4 +16,13 @@ class PROJECTA_API ABasicEnemy : public APaperZDCharacter
 
 public:
 	ABasicEnemy();
+
+	void Attack();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetCombat();
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsAttacking = false;
 };
