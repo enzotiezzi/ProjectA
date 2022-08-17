@@ -5,6 +5,7 @@
 #include <PaperZD/Public/PaperZDAnimationComponent.h>
 #include <PaperZD/Public/PaperZDAnimInstance.h>
 #include <Paper2D/Classes/PaperFlipbookComponent.h>
+#include <BasicEnemy.h>
 
 ABaseCharacter::ABaseCharacter()
 {
@@ -68,7 +69,20 @@ void ABaseCharacter::Attack()
 
 		GetAnimationComponent()->GetAnimInstance()->JumpToNode("Attack1");
 
+		FHitResult HitResult;
+		FVector HitLocation = GetActorLocation() + (FVector(GetSprite()->GetRelativeScale3D().X, 0, 0) * AttackRange);
+		FCollisionShape CollisionShape = FCollisionShape::MakeSphere(32);
+
 		DrawDebugSphere(GetWorld(), GetActorLocation() + (FVector(GetSprite()->GetRelativeScale3D().X, 0, 0) * AttackRange), 16, 16, FColor::Red, false, 1);
+		bool Success = GetWorld()->SweepSingleByChannel(HitResult, HitLocation, HitLocation, FQuat::Identity, ECollisionChannel::ECC_Pawn, CollisionShape);
+	
+		if (Success)
+		{
+			if (ABasicEnemy* Enemy = Cast<ABasicEnemy>(HitResult.GetActor()))
+			{
+				Enemy->ReceiveDamage(2);
+			}
+		}
 	}
 }
 

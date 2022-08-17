@@ -17,7 +17,11 @@ class PROJECTA_API ABasicEnemy : public APaperZDCharacter
 public:
 	ABasicEnemy();
 
+	virtual void BeginPlay() override;
+
 	void Attack();
+
+	float ReceiveDamage(float DamageAmount);
 
 	UFUNCTION(BlueprintCallable)
 	void ResetCombat();
@@ -25,4 +29,13 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsAttacking = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float MaxHealth;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float CurrentHealth;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsTakingHit = false;
 };
