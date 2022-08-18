@@ -26,4 +26,7 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UArrowComponent* SpawnArrow;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float TimeToSpawnNextEnemyInSeconds = 1;
 };

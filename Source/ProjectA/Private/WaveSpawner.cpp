@@ -20,9 +20,18 @@ void AWaveSpawner::BeginPlay()
 	{
 		if (UWave* Wave = Cast<UWave>(WaveSubObject.GetDefaultObject()))
 		{
+			float CurrentDelayToSpawn = TimeToSpawnNextEnemyInSeconds;
+
 			for (TSubclassOf<ABasicEnemy> EnemySubObject : Wave->Enemies)
 			{
-				ABasicEnemy* Enemy = GetWorld()->SpawnActor<ABasicEnemy>(EnemySubObject, SpawnArrow->GetComponentLocation(), FRotator(0,0,0), FActorSpawnParameters());
+			
+				FTimerHandle SpawnTimer;
+				GetWorld()->GetTimerManager().SetTimer(SpawnTimer, [this, EnemySubObject, SpawnTimer]()
+					{
+						ABasicEnemy* Enemy = GetWorld()->SpawnActor<ABasicEnemy>(EnemySubObject, SpawnArrow->GetComponentLocation(), FRotator(0, 0, 0), FActorSpawnParameters());
+					}, CurrentDelayToSpawn, false);
+
+				CurrentDelayToSpawn += TimeToSpawnNextEnemyInSeconds;
 			}
 		}
 	}
